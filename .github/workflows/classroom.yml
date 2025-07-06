@@ -18,19 +18,11 @@ jobs:
         run: chmod +x gradlew
 
       - name: fibonacci test
-        # ID simplificado para 'runner'
         id: runner
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          # Nome do teste sem espaços
           test-name: fibonacci-test
           setup-command: ''
           command: ./gradlew test
           timeout: 10
           max-score: 100
-          # ---
-      - name: Autograding Reporter
-        uses: classroom-resources/autograding-grading-reporter@v1
-        with:
-          # Apontando para o novo ID 'runner'
-          runners: runner
