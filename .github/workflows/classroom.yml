@@ -23,8 +23,8 @@ jobs:
         with:
           test-name: fibonacci test
           setup-command: ''
-          # COMANDO MODIFICADO PARA DEPURAÇÃO:
-          command: ls -R && ./gradlew test --stacktrace
+          # Comando final e limpo, sem depuração
+          command: ./gradlew test
           timeout: 10
           max-score: 100
           # ---
