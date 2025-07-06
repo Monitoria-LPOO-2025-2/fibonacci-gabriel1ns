@@ -14,13 +14,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ETAPA ADICIONADA PARA CORRIGIR O PROBLEMA
+      # PASSO DE DEPURAÇÃO: Isso vai nos mostrar a estrutura exata de pastas.
+      - name: List files in the repository
+        run: ls -R
+
       - name: Grant execute permission for gradlew
+        # ADICIONADO: Diz ao comando para rodar dentro da subpasta do projeto
+        working-directory: ./fibonacci-gabriel1ns
         run: chmod +x gradlew
 
       - name: fibonacci test
         id: fibonacci-test
         uses: classroom-resources/autograding-command-grader@v1
+        # ADICIONADO: Diz ao teste para rodar dentro da subpasta do projeto
+        working-directory: ./fibonacci-gabriel1ns
         with:
           test-name: fibonacci test
           setup-command: ''
