@@ -1,7 +1,7 @@
 name: Autograding Tests
 'on':
-- push
-- repository_dispatch
+  - push
+  - repository_dispatch
 permissions:
   checks: write
   actions: read
@@ -11,21 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor != 'github-classroom[bot]'
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: fibonacci test
-      id: fibonacci-test
-      uses: classroom-resources/autograding-command-grader@v1
-      with:
-        test-name: fibonacci test
-        setup-command: ''
-        command: gradle test
-        timeout: 5
-        max-score: 100
-        # ---
-    - name: Autograding Reporter
-      uses: classroom-resources/autograding-grading-reporter@v1
-      env:
-        ASSIGNMENT-TEST_RESULTS: "${{steps.fibonacci-test.outputs.result}}"
-      with:
-        runners: fibonacci-test
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: fibonacci test
+        # O ID da nossa etapa de teste
+        id: fibonacci-test
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: fibonacci test
+          setup-command: ''
+          # Usamos ./gradlew pois já provamos que é o necessário
+          command: ./gradlew test
+          timeout: 10
+          max-score: 100
+          # ---
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          # A convenção de nome exata: ID em maiúsculas com hífen virando _
+          FIBONACCI-TEST_RESULTS: "${{steps.fibonacci-test.outputs.result}}"
+        with:
+          # A propriedade 'runners' também é usada, apontando para o ID
+          runners: fibonacci-test
