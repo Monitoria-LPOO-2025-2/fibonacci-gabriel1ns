@@ -13,13 +13,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      # ETAPA ADICIONADA PARA CORRIGIR O PROBLEMA
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: fibonacci test
         id: fibonacci-test
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: fibonacci test
           setup-command: ''
-          # Comando corrigido para usar o Gradle Wrapper
           command: ./gradlew test
           timeout: 5
           max-score: 100
