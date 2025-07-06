@@ -18,11 +18,22 @@ jobs:
         run: chmod +x gradlew
 
       - name: fibonacci test
-        id: runner
+        # Damos um ID para a etapa de teste
+        id: fibonacci-test
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: fibonacci-test
+          test-name: fibonacci test
           setup-command: ''
           command: ./gradlew test
           timeout: 10
           max-score: 100
+          # ---
+      - name: Autograding Reporter
+        # Esta etapa usa o ID da etapa anterior para buscar o resultado
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          # Passando o resultado explicitamente através de uma variável de ambiente
+          ASSIGNMENT-TEST_RESULTS: "${{steps.fibonacci-test.outputs.result}}"
+        with:
+          # A propriedade 'runners' é removida para não causar conflito
+          runners: ''
