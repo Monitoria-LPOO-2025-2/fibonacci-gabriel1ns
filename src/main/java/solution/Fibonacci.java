@@ -17,6 +17,17 @@ public class Fibonacci {
         if (n <= 1) {
             return n;
         }
-        return fibonacci(n - 1) + fibonacci(n - 2);
+
+        int a = 0;
+        int b = 1;
+        int resultado = 0;
+
+        for (int i = 2; i <= n; i++) {
+            resultado = a + b;
+            a = b;
+            b = resultado;
+        }
+
+        return b;
     }
 }
