@@ -19,7 +19,8 @@ jobs:
         with:
           test-name: fibonacci test
           setup-command: ''
-          command: gradle test
+          # Comando corrigido para usar o Gradle Wrapper
+          command: ./gradlew test
           timeout: 5
           max-score: 100
           # ---
